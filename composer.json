@@ -16,6 +16,7 @@
         "laravel-admin-ext/reporter": "^1.0",
         "laravel-admin-ext/scheduling": "^1.0",
         "laravel/framework": "5.7.*",
+        "laravel/socialite": "^3.1",
         "laravel/tinker": "^1.0"
     },
     "require-dev": {
