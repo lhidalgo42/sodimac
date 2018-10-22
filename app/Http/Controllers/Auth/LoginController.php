@@ -36,4 +36,18 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function redirectToGoogleProvider()
+    {
+    $parameters = ['access_type' => 'offline'];
+    return Socialite::driver('google')->scopes(["https://www.googleapis.com/auth/drive"])->with($parameters)->redirect();
+    }
+ 
+    public function handleProviderGoogleCallback()
+    {
+    $auth_user = Socialite::driver('google')->user();
+    $user = User::updateOrCreate(['email' => $auth_user->email], ['refresh_token' => $auth_user->token, 'name' => $auth_user->name]);
+    Auth::login($user, true);
+    return redirect()->to('/'); // Redirect to a secure page
+    }
 }
