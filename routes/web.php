@@ -36,3 +36,5 @@ Route::post('/drive/upload', 'DriveController@uploadFile'); // Upload file to Dr
 Route::get('/drive/create', 'DriveController@create'); // Upload file to Drive from Storage
  
 Route::get('/drive/delete/{id}', 'DriveController@deleteFile'); // Delete file or folder
+
+Route::resource('ticket','TicketController');
