@@ -37,4 +37,11 @@ class TaxiController extends Controller
         $taxi->users()->attach($user);
         return 1;
     }
+    public function deassing($id)
+    {
+        $user = Auth::user()->id;
+        $taxi = Taxi::find($id);
+        $taxi->users()->detach($user);
+        return 1;
+    }
 }

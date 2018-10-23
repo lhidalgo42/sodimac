@@ -28,10 +28,10 @@
                     <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
                     <td>{{count($taxi->users)}} / {{$taxi->capacity}}</td>
                     <td>
-                        @if(\Illuminate\Support\Facades\Auth::user()->id != $taxi->user_id && $taxi->capacity > count($taxi->users))
+                        @if(\Illuminate\Support\Facades\Auth::user()->id != $taxi->user_id && $taxi->capacity > count($taxi->users) && !$taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
                             <a href="#" class="btn btn-primary subirse" taxi="{{$taxi->id}}}}">Subirse a este Taxi</a>
                         @else
-                            <a href="#" class="btn btn-primary" disabled="disabled">Subirse a este Taxi</a>
+                            <a href="#" class="btn btn-danger bajarse" taxi="{{$taxi->id}}">Bajarse de este Taxi</a>
                         @endif
                     </td>
                 </tr>
@@ -78,6 +78,36 @@
                     );
                     $.ajax({
                         url: "/taxi/assing/" + taxi,
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    setTimeout(function () {
+                        window.location.href = "/";
+                    },4000);
+                }
+            })
+        })
+        $(".bajarse").click(function () {
+            var taxi = $(this).attr('taxi');
+            swal({
+                title: 'Estas Seguro?',
+                text: "Estas Seguro de que quieres bajarte de este Taxi ?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Estoy Seguro'
+            }).then((result) => {
+                if (result.value) {
+                    swal(
+                        'Confirmado',
+                        'Te has bajado Correctamente',
+                        'success'
+                    );
+                    $.ajax({
+                        url: "/taxi/deassing/" + taxi,
                         method: "POST",
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
