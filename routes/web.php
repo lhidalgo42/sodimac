@@ -16,3 +16,4 @@ Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/taxi/create','TaxiController@create');
 Route::post('/taxi/create','TaxiController@store');
+Route::post('/taxi/assing/{id}','TaxiController@assing');

@@ -7,7 +7,7 @@
             <tr>
                 <th>Solicitado por</th>
                 <th>Salida</th>
-                <th>LLegada</th>
+                <th>LLegada Aproximada</th>
                 <th>Origen</th>
                 <th>Destino</th>
                 <th>Cupos Libres</th>
@@ -19,23 +19,23 @@
             </thead>
             <?php \Carbon\Carbon::setLocale('es'); ?>
             <tbody>
-                @foreach($taxis as $taxi)
-                    <tr>
-                        <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
-                        <td>{{\Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
-                        <td>{{\Carbon\Carbon::parse($taxi->arrival)->diffForHumans()}}</td>
-                        <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
-                        <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
-                        <td>{{$taxi->capacity -count($taxi->users)}} / {{$taxi->capacity}}</td>
-                        <td>
-                            @if(\Illuminate\Support\Facades\Auth::user()->id != $taxi->user_id && $taxi->capacity > count($taxi->users))
-                                <a href="#" class="btn btn-primary" taxi="{{$taxi->id}}}}">Subirse a este Taxi</a>
-                            @else
-                                <a href="#" class="btn btn-primary" disabled="disabled">Subirse a este Taxi</a>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
+            @foreach($taxis as $taxi)
+                <tr>
+                    <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
+                    <td>{{$taxi->departure}}</td>
+                    <td>{{$taxi->arrival}}</td>
+                    <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
+                    <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
+                    <td>{{count($taxi->users)}} / {{$taxi->capacity}}</td>
+                    <td>
+                        @if(\Illuminate\Support\Facades\Auth::user()->id != $taxi->user_id && $taxi->capacity > count($taxi->users))
+                            <a href="#" class="btn btn-primary subirse" taxi="{{$taxi->id}}}}">Subirse a este Taxi</a>
+                        @else
+                            <a href="#" class="btn btn-primary" disabled="disabled">Subirse a este Taxi</a>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
             @auth
                 <tfooter>
@@ -57,3 +57,35 @@
         }
     </style>
 @endsection
+@section('js')
+    <script>
+        $(".subirse").click(function () {
+            var taxi = $(this).attr('taxi');
+            swal({
+                title: 'Estas Seguro?',
+                text: "Estas Seguro de que quieres subirte a este Taxi ?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Estoy Seguro'
+            }).then((result) => {
+                if (result.value) {
+                    swal(
+                        'Confirmado',
+                        'Taxi Asignado Correctamente',
+                        'success'
+                    );
+                    $.ajax({
+                        url: "/taxi/assing/" + taxi,
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    window.location.href = "/";
+                }
+            })
+        })
+    </script>
+@endsection    

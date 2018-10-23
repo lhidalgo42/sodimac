@@ -10,20 +10,31 @@ use Illuminate\Support\Facades\Auth;
 
 class TaxiController extends Controller
 {
-    public function create(){
+    public function create()
+    {
         $locations = Location::all();
         return view('taxi.create')->with(compact('locations'));
     }
-    public function store(Request $request){
+
+    public function store(Request $request)
+    {
         $user = Auth::user()->id;
         $taxi = new Taxi();
         $taxi->departure = $request->input('salida');
-        $taxi->arrival = Carbon::createFromFormat('Y-m-d H:i',$request->input('salida'))->addMinutes(40)->toDateTimeString();
+        $taxi->arrival = Carbon::createFromFormat('Y-m-d H:i', $request->input('salida'))->addMinutes(40)->toDateTimeString();
         $taxi->origin_id = $request->input('origen');
         $taxi->destination_id = $request->input('destino');
         $taxi->user_id = $user;
         $taxi->save();
         $taxi->users()->attach($user);
         return redirect('/');
+    }
+
+    public function assing($id)
+    {
+        $user = Auth::user()->id;
+        $taxi = Taxi::find($id);
+        $taxi->users()->attach($user);
+        return 1;
     }
 }

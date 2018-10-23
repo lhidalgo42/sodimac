@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $taxis = Taxi::where('departure','>',Carbon::now()->subMinutes(30)->toDateTimeString())->orderBy('departure','ASC')->get();
+        $taxis = Taxi::where('departure','>',Carbon::now()->subMinutes(30)->toDateTimeString())->where('departure','<',Carbon::now()->addHours(15)->toDateTimeString())->orderBy('departure','ASC')->get();
         return view('welcome')->with(compact('locations','taxis'));
     }
 }
