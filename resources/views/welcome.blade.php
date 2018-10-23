@@ -10,7 +10,7 @@
                 <th>LLegada Aproximada</th>
                 <th>Origen</th>
                 <th>Destino</th>
-                <th>Cupos Libres</th>
+                <th>Cupos</th>
                 @auth
                     <th>Solicitar</th>
                 @endauth
@@ -28,7 +28,7 @@
                     <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
                     <td>{{count($taxi->users)}} / {{$taxi->capacity}}</td>
                     <td>
-                        @if(\Illuminate\Support\Facades\Auth::user()->id != $taxi->user_id && $taxi->capacity > count($taxi->users) && !$taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
+                        @if($taxi->capacity > count($taxi->users) && !$taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
                             <a href="#" class="btn btn-primary subirse" taxi="{{$taxi->id}}}}">Subirse a este Taxi</a>
                         @else
                             <a href="#" class="btn btn-danger bajarse" taxi="{{$taxi->id}}">Bajarse de este Taxi</a>
