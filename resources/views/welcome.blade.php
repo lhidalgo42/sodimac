@@ -83,7 +83,9 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-                    window.location.href = "/";
+                    setTimeout(function () {
+                        window.location.href = "/";
+                    },4000);
                 }
             })
         })
