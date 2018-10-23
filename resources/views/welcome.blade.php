@@ -30,7 +30,9 @@
                     <td>
                         @if($taxi->capacity > count($taxi->users) && !$taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
                             <a href="#" class="btn btn-primary subirse" taxi="{{$taxi->id}}}}">Subirse a este Taxi</a>
-                        @else
+                        @elseif($taxi->capacity == count($taxi->users))
+                            <a href="#" class="btn btn-warning">Taxi sin Cupo</a>
+                        @elseif($taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
                             <a href="#" class="btn btn-danger bajarse" taxi="{{$taxi->id}}">Bajarse de este Taxi</a>
                         @endif
                     </td>
