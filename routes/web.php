@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/taxi/create','TaxiController@create');
+Route::post('/taxi/create','TaxiController@store');

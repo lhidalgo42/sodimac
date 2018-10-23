@@ -18,6 +18,7 @@ class CreateTaxisTable extends Migration
             $table->integer('capacity')->default(4);
             $table->dateTime('departure');
             $table->dateTime('arrival');
+            $table->integer('origin_id');
             $table->integer('destination_id');
             $table->integer('user_id');
             $table->timestamps();

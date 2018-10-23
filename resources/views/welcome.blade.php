@@ -18,43 +18,63 @@
             </thead>
             <tbody>
             <tr>
-                <td>Juan</td>
+                <td>Test User 1</td>
                 <td>9:00</td>
                 <td>9:50</td>
                 <td>Renca</td>
                 <td>3 / 4</td>
+                @auth
                 <td>
-                    <button class="btn btn-primary">Subirse al taxi</button>
+                    <a href="/taxi/create" class="btn btn-primary">Subirse al taxi</a>
                 </td>
+                    @endauth
             </tr>
             <tr>
+                <td>Test User 2</td>
                 <td>9:30</td>
                 <td>10:10</td>
                 <td>Renca</td>
                 <td>3/4</td>
-                <td>
-                    <button class="btn btn-primary">Subirse al taxi</button>
-                </td>
+                @auth
+                    <td>
+                        <a href="/taxi/create" class="btn btn-primary">Subirse al taxi</a>
+                    </td>
+                @endauth
             </tr>
             <tr>
+                <td>Test User 3</td>
                 <td>9:40</td>
                 <td>10:20</td>
                 <td>Renca</td>
                 <td>3/4</td>
-                <td>
-                    <button class="btn btn-primary">Subirse al taxi</button>
-                </td>
+                @auth
+                    <td>
+                        <a href="/taxi/create" class="btn btn-primary">Subirse al taxi</a>
+                    </td>
+                @endauth
             </tr>
             <tr>
+                <td>Test User 4</td>
                 <td>10:00</td>
                 <td>10:50</td>
                 <td>Renca</td>
                 <td>3/4</td>
-                <td>
-                    <button class="btn btn-primary">Subirse al taxi</button>
-                </td>
+                @auth
+                    <td>
+                        <a href="/taxi/create" class="btn btn-primary">Subirse al taxi</a>
+                    </td>
+                @endauth
             </tr>
             </tbody>
+            @auth
+                <tfooter>
+                    <tr>
+                        <td colspan="6">
+                            <a href="/taxi/create" class="btn btn-block btn-success">Crear Nuevo Taxi</a>
+                        </td>
+                    </tr>
+                </tfooter>
+            @endauth
         </table>
     </div>
 
