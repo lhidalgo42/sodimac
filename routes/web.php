@@ -18,23 +18,4 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/login/google', 'Auth\LoginController@redirectToGoogleProvider');
- 
-Route::get('login/google/callback', 'Auth\LoginController@handleProviderGoogleCallback');
-
-Route::get('/drive', 'DriveController@getDrive'); // retreive folders
- 
-Route::get('/drive/upload', 'DriveController@uploadFile'); // File upload form
- 
-Route::post('/drive/upload', 'DriveController@uploadFile'); // Upload file to Drive from Form
- 
-Route::get('/drive/create', 'DriveController@create'); // Upload file to Drive from Storage
- 
-Route::get('/drive/delete/{id}', 'DriveController@deleteFile'); // Delete file or folder
-
-Route::resource('ticket','TicketController');
+Route::get('/taxi/create','TaxiController@create');

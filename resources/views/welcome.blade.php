@@ -5,19 +5,24 @@
         <table class="table table-hover table-bordered" id="taxis">
             <thead>
             <tr>
-                <td>Hora de Salida</td>
-                <td>Hora de LLegada</td>
-                <td>Destino</td>
-                <td>Cupos</td>
-                <td>opciones</td>
+                <th>Solicitado por</th>
+                <th>Salida</th>
+                <th>LLegada</th>
+                <th>Destino</th>
+                <th>Cupos Libres</th>
+                @auth
+                    <th>Solicitar</th>
+                @endauth
+
             </tr>
             </thead>
             <tbody>
             <tr>
+                <td>Juan</td>
                 <td>9:00</td>
                 <td>9:50</td>
                 <td>Renca</td>
-                <td>3/4</td>
+                <td>3 / 4</td>
                 <td>
                     <button class="btn btn-primary">Subirse al taxi</button>
                 </td>
@@ -56,7 +61,7 @@
 @endsection
 @section('css')
     <style>
-        #taxis > tr > td{
+        #taxis > tr > td {
             text-align: center;
         }
     </style>
