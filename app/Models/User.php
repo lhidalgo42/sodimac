@@ -27,4 +27,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function taxis(){
+        return $this->belongsToMany(Taxi::class,'taxi_user');
+    }
 }

@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Taxi extends Model
 {
     public function users(){
-        return $this->BelongsToMany(User::class);
+        return $this->BelongsToMany(User::class,'taxi_user');
     }
 }

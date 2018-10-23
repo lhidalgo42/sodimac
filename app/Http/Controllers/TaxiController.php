@@ -15,13 +15,15 @@ class TaxiController extends Controller
         return view('taxi.create')->with(compact('locations'));
     }
     public function store(Request $request){
+        $user = Auth::user()->id;
         $taxi = new Taxi();
         $taxi->departure = $request->input('salida');
         $taxi->arrival = Carbon::createFromFormat('Y-m-d H:i',$request->input('salida'))->addMinutes(40)->toDateTimeString();
         $taxi->origin_id = $request->input('origen');
         $taxi->destination_id = $request->input('destino');
-        $taxi->user_id = Auth::user()->id;
+        $taxi->user_id = $user;
         $taxi->save();
+        $taxi->users()->attach($user);
         return redirect('/');
     }
 }

@@ -8,6 +8,7 @@
                 <th>Solicitado por</th>
                 <th>Salida</th>
                 <th>LLegada</th>
+                <th>Origen</th>
                 <th>Destino</th>
                 <th>Cupos Libres</th>
                 @auth
@@ -16,60 +17,30 @@
 
             </tr>
             </thead>
+            <?php \Carbon\Carbon::setLocale('es'); ?>
             <tbody>
-            <tr>
-                <td>Test User 1</td>
-                <td>9:00</td>
-                <td>9:50</td>
-                <td>Renca</td>
-                <td>3 / 4</td>
-                @auth
-                <td>
-                    <a href="/taxi/create" class="btn btn-primary">Subirse al taxi</a>
-                </td>
-                    @endauth
-            </tr>
-            <tr>
-                <td>Test User 2</td>
-                <td>9:30</td>
-                <td>10:10</td>
-                <td>Renca</td>
-                <td>3/4</td>
-                @auth
-                    <td>
-                        <a href="/taxi/create" class="btn btn-primary">Subirse al taxi</a>
-                    </td>
-                @endauth
-            </tr>
-            <tr>
-                <td>Test User 3</td>
-                <td>9:40</td>
-                <td>10:20</td>
-                <td>Renca</td>
-                <td>3/4</td>
-                @auth
-                    <td>
-                        <a href="/taxi/create" class="btn btn-primary">Subirse al taxi</a>
-                    </td>
-                @endauth
-            </tr>
-            <tr>
-                <td>Test User 4</td>
-                <td>10:00</td>
-                <td>10:50</td>
-                <td>Renca</td>
-                <td>3/4</td>
-                @auth
-                    <td>
-                        <a href="/taxi/create" class="btn btn-primary">Subirse al taxi</a>
-                    </td>
-                @endauth
-            </tr>
+                @foreach($taxis as $taxi)
+                    <tr>
+                        <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
+                        <td>{{\Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
+                        <td>{{\Carbon\Carbon::parse($taxi->arrival)->diffForHumans()}}</td>
+                        <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
+                        <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
+                        <td>{{$taxi->capacity -count($taxi->users)}} / {{$taxi->capacity}}</td>
+                        <td>
+                            @if(\Illuminate\Support\Facades\Auth::user()->id != $taxi->user_id && $taxi->capacity > count($taxi->users))
+                                <a href="#" class="btn btn-primary" taxi="{{$taxi->id}}}}">Subirse a este Taxi</a>
+                            @else
+                                <a href="#" class="btn btn-primary" disabled="disabled">Subirse a este Taxi</a>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
             @auth
                 <tfooter>
                     <tr>
-                        <td colspan="6">
+                        <td colspan="7">
                             <a href="/taxi/create" class="btn btn-block btn-success">Crear Nuevo Taxi</a>
                         </td>
                     </tr>
