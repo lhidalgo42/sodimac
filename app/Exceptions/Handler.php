@@ -2,7 +2,6 @@
 
 namespace App\Exceptions;
 
-use Encore\Admin\Reporter\Reporter;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
@@ -37,10 +36,7 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        if ($this->shouldReport($exception)) {
-            Reporter::report($exception);
-        }
-        //parent::report($exception);
+        parent::report($exception);
     }
 
     /**

@@ -1,12 +1,19 @@
 <?php
 
+/*
+ * Taken from
+ * https://github.com/laravel/framework/blob/5.3/src/Illuminate/Auth/Console/stubs/make/controllers/HomeController.stub
+ */
+
 namespace App\Http\Controllers;
 
-use App\Models\Location;
-use App\Models\Taxi;
-use Carbon\Carbon;
+use App\Http\Requests;
 use Illuminate\Http\Request;
 
+/**
+ * Class HomeController
+ * @package App\Http\Controllers
+ */
 class HomeController extends Controller
 {
     /**
@@ -22,11 +29,10 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        $taxis = Taxi::where('departure','>',Carbon::now()->subMinutes(30)->toDateTimeString())->where('departure','<',Carbon::now()->addHours(15)->toDateTimeString())->orderBy('departure','ASC')->get();
-        return view('welcome')->with(compact('locations','taxis'));
+        return view('adminlte::home');
     }
 }
