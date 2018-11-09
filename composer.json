@@ -13,6 +13,7 @@
         "google/apiclient": "^2.2",
         "laravel-admin-ext/helpers": "^1.1",
         "laravel-admin-ext/log-viewer": "^1.0",
+        "laravel-admin-ext/reporter": "^1.0",
         "laravel-admin-ext/scheduling": "^1.0",
         "laravel/dusk": "^4.0",
         "laravel/framework": "5.7.*",
