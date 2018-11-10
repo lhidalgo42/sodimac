@@ -11,6 +11,11 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index');
-    $router->resource('location',LocationsController::class);
+    $router->resource('locations',LocationController::class);
+    $router->resource('users',UserController::class);
+    $router->resource('taxis',TaxiController::class);
+    $router->resource('tickets',TicketController::class);
+
+
 
 });

@@ -2,7 +2,9 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Taxi;
 use App\Models\Location;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -10,7 +12,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class LocationsController extends Controller
+class TaxiController extends Controller
 {
     use HasResourceActions;
 
@@ -23,8 +25,8 @@ class LocationsController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
-            ->description('description')
+            ->header('Taxis solicitados')
+            ->description(' ')
             ->body($this->grid());
     }
 
@@ -79,15 +81,23 @@ class LocationsController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new Location);
+        $grid = new Grid(new Taxi);
 
         $grid->id('ID');
-        $grid->name('Nombre');
-        $grid->address('Direccion');
-        $grid->longitude('Longitud');
-        $grid->latitude('Latitud');
-        $grid->created_at('Creado');
-        $grid->updated_at('Editado');
+        $grid->capacity('Capacidad');
+        $grid->departure('Hora de salida');
+        $grid->arrival('Hora de llegada');
+        $grid->origin_id('Origen')->display(function($origin_id) {
+        return Location::find($origin_id)->name;
+        });
+        $grid->destination_id('Destino')->display(function($destination_id) {
+        return Location::find($destination_id)->name;
+        });
+        $grid->user_id('Solicitado por')->display(function($user_id) {
+        return User::find($user_id)->name;
+        });
+        $grid->created_at('Created at');
+        #$grid->updated_at('Updated at');
 
         return $grid;
     }
@@ -100,15 +110,23 @@ class LocationsController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(Location::findOrFail($id));
-
+        $show = new Show(Taxi::findOrFail($id));
         $show->id('ID');
-        $show->name('Nombre');
-        $show->address('Direccion');
-        $show->longitude('Longitud');
-        $show->latitude('Latitud');
-        $show->created_at('Creado');
-        $show->updated_at('Editado');
+        $show->capacity('Capacidad');
+        $show->departure('Hora de salida');
+        $show->arrival('Hora de llegada');
+        $show->origin_id('Origen')->as(function($origin_id) {
+        return Location::find($origin_id)->name;
+        });
+        $show->destination_id('Destino')->as(function($destination_id) {
+        return Location::find($destination_id)->name;
+        });
+        $show->user_id('Solicitado por')->as(function($user_id) {
+        return User::find($user_id)->name;
+        });
+        $show->created_at('Created at');
+        $show->updated_at('Updated at');
+    
 
         return $show;
     }
@@ -120,12 +138,16 @@ class LocationsController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new Location);
+        $form = new Form(new Taxi);
 
-        $form->text('name','Nombre');
-        $form->text('address','Direccion');
-        $form->text('latitude','latitude');
-        $form->text('longitude','Longitud');
+        
+        $form->select('origin_id','Origen')->options(Location::pluck('name','id'));
+        $form->select('destination_id','Destino')->options(Location::pluck('name','id'));
+        $form->datetime('departure','Hora de Salida');
+        $form->datetime('arrival','Hora de llegada');        
+        $form->select('user_id','Solicitado por')->options(User::pluck('name','id'));
+        
+
 
         return $form;
     }
