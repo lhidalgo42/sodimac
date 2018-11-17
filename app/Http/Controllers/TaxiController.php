@@ -44,4 +44,8 @@ class TaxiController extends Controller
         $taxi->users()->detach($user);
         return 1;
     }
+    public function show($location = 1){
+        $taxis = Taxi::where('departure','>',Carbon::now()->subMinutes(30)->toDateTimeString())->where('departure','<',Carbon::now()->addHours(15)->toDateTimeString())->orderBy('departure','ASC')->get();
+        return view('welcome')->with(compact('locations','taxis'));
+    }
 }

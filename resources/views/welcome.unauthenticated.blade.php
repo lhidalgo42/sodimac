@@ -1,5 +1,10 @@
-@extends('layouts.app')
-@section('content')
+@extends('adminlte::layouts.app')
+
+@section('htmlheader_title')
+    {{ trans('adminlte_lang::message.home') }}
+@endsection
+
+@section('main-content')
 
     <div class="container">
         <table class="table table-hover table-bordered" id="taxis">
@@ -122,4 +127,4 @@
             })
         })
     </script>
-@endsection    
+@endsection
