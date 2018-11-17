@@ -1,5 +1,11 @@
-@extends('layouts.app')
-@section('content')
+@extends('adminlte::layouts.app')
+
+@section('htmlheader_title')
+    {{ trans('adminlte_lang::message.home') }}
+@endsection
+
+
+@section('main-content')
     <div class="container">
         <div class="row">
             <form action="/taxi/create" method="post">
@@ -32,8 +38,6 @@
             </form>
         </div>
     </div>
-@endsection
-@section('js')
     <script>
         $('#salida').datetimepicker({
             uiLibrary: 'bootstrap4',

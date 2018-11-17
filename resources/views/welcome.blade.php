@@ -39,15 +39,7 @@
                 </tr>
             @endforeach
             </tbody>
-            @auth
-                <tfooter>
-                    <tr>
-                        <td colspan="7">
-                            <a href="/taxi/create" class="btn btn-block btn-success">Crear Nuevo Taxi</a>
-                        </td>
-                    </tr>
-                </tfooter>
-            @endauth
+
         </table>
     </div>
 

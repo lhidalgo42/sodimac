@@ -8,22 +8,50 @@
 @section('main-content')
 	<div class="container-fluid spark-screen">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md-12">
 
 				<!-- Default box -->
 				<div class="box">
-					<div class="box-header with-border">
-						<h3 class="box-title">Home</h3>
-
-						<div class="box-tools pull-right">
-							<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-								<i class="fa fa-minus"></i></button>
-							<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-								<i class="fa fa-times"></i></button>
-						</div>
-					</div>
 					<div class="box-body">
-						{{ trans('adminlte_lang::message.logged') }}. Start creating your amazing application!
+						<table class="table table-hover table-bordered" id="taxis">
+							<thead>
+							<tr>
+								<th>Solicitado por</th>
+								<th>Salida</th>
+								<th>LLegada Aproximada</th>
+								<th>Origen</th>
+								<th>Destino</th>
+								<th>Cupos</th>
+								@auth
+									<th>Solicitar</th>
+								@endauth
+
+							</tr>
+							</thead>
+                            <?php \Carbon\Carbon::setLocale('es'); ?>
+							<tbody>
+							@foreach($taxis as $taxi)
+								<tr>
+									<td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
+									<td>{{$taxi->departure}}</td>
+									<td>{{$taxi->arrival}}</td>
+									<td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
+									<td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
+									<td>{{count($taxi->users)}} / {{$taxi->capacity}}</td>
+									<td>
+										@if($taxi->capacity > count($taxi->users) && !$taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
+											<a href="#" class="btn btn-primary subirse" taxi="{{$taxi->id}}}}">Subirse a este Taxi</a>
+										@elseif($taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
+											<a href="#" class="btn btn-danger bajarse" taxi="{{$taxi->id}}">Bajarse de este Taxi</a>
+										@elseif($taxi->capacity <= count($taxi->users) && !$taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
+											<a href="#" class="btn btn-warning">Taxi sin Cupo</a>
+										@endif
+									</td>
+								</tr>
+							@endforeach
+							</tbody>
+
+						</table>
 					</div>
 					<!-- /.box-body -->
 				</div>

@@ -9,6 +9,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Models\Taxi;
+use Carbon\Carbon;
 
 /**
  * Class HomeController
@@ -33,6 +35,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('adminlte::home');
+        $taxis = Taxi::where('departure','>',Carbon::now()->subMinutes(30)->toDateTimeString())->where('departure','<',Carbon::now()->addHours(15)->toDateTimeString())->orderBy('departure','ASC')->get();
+
+        return view('adminlte::home')->with(compact('taxis'));
     }
 }
