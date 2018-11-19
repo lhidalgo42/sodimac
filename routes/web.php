@@ -12,6 +12,7 @@
 */
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', 'TaxiController@show');
+    Route::get('/test', 'DistanceController@distance');
 });
 
 Route::group(['middleware' => 'auth'], function () {
