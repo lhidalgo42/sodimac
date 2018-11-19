@@ -10,8 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'TaxiController@show');
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/', 'TaxiController@show');
+});
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/taxi/create','TaxiController@create');
