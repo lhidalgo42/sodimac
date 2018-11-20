@@ -31,7 +31,7 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">{{ trans('adminlte_lang::message.header') }}</li>
+            <li class="header">Menú</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="{{ url('home') }}"><i class='fa fa-dashboard'></i> <span>Inicio</span></a></li>
             <li class="treeview">
