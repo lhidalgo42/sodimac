@@ -105,7 +105,7 @@
                         },
                         success: function (res) {
                             console.log(res);
-                            if (res == 1) {
+                            if (res) {
                                 setTimeout(function () {
                                     swal(
                                         'Confirmado',
@@ -124,7 +124,7 @@
                                         'warning'
                                     );
                                     window.location.href = "/";
-                                }, 2000);
+                                }, 4000);
                             }
                         }
                     });
