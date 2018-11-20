@@ -45,9 +45,9 @@ class TaxiController extends Controller
             $pasajeros += $passenger->pivot->passengers;
         if($pasajeros < 4) {
             $taxi->users()->attach($user, ['passengers' => 1]);
-            return true;
+            return 1;
         }
-        return false;
+        return 0;
 
     }
 

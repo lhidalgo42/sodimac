@@ -33,7 +33,7 @@
                                 <?php
                                 $pasajeros = 0;
                                 foreach ($taxi->passengers as $passenger)
-                                    $pasajeros += $passenger->pivot->passengers;
+                                    $pasajeros +=$passenger->pivot->passengers;
                                 ?>
                                 <tr>
                                     <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
@@ -103,9 +103,9 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        success: function (res) {
-                            console.log(res);
-                            if (res) {
+                        success:function (res) {
+                            console.log(res)
+                            if (res === 1){
                                 setTimeout(function () {
                                     swal(
                                         'Confirmado',
@@ -124,7 +124,7 @@
                                         'warning'
                                     );
                                     window.location.href = "/";
-                                }, 4000);
+                                }, 2000);
                             }
                         }
                     });
