@@ -18,7 +18,7 @@
             </div>
         @endif
 
-        <!-- search form (Optional) -->
+        <!-- 
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="{{ trans('adminlte_lang::message.search') }}..."/>
@@ -27,7 +27,7 @@
               </span>
             </div>
         </form>
-        <!-- /.search form -->
+         -->
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
