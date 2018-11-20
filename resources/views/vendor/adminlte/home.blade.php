@@ -104,25 +104,24 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success:function (res) {
-                            console.log(res)
+                            console.log(res);
                             if (res === 1){
+                                swal(
+                                    'Confirmado',
+                                    'Taxi Asignado Correctamente',
+                                    'success'
+                                );
                                 setTimeout(function () {
-                                    swal(
-                                        'Confirmado',
-                                        'Taxi Asignado Correctamente',
-                                        'success'
-                                    );
                                     window.location.href = "/";
                                 }, 2000);
                             }
                             else {
-
+                                swal(
+                                    'Taxi lleno',
+                                    'Alguien tomo el cupo, Intenta nuevamente',
+                                    'warning'
+                                );
                                 setTimeout(function () {
-                                    swal(
-                                        'Taxi lleno',
-                                        'Alguien tomo el cupo, Intenta nuevamente',
-                                        'warning'
-                                    );
                                     window.location.href = "/";
                                 }, 2000);
                             }
