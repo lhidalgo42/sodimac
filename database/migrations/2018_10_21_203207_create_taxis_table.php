@@ -21,6 +21,7 @@ class CreateTaxisTable extends Migration
             $table->integer('origin_id');
             $table->integer('destination_id');
             $table->integer('user_id');
+            $table->integer('distance');
             $table->timestamps();
         });
         Schema::create('taxi_user',function (Blueprint $table){

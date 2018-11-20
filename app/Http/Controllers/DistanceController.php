@@ -8,11 +8,7 @@ use Illuminate\Http\Request;
 
 class DistanceController extends Controller
 {
-	public function distance(){
-	$distance = self::calculate('Av. Luis Thayer Ojeda 1110, Providencia', 'García Reyes 421, Valdivia');
-    dd($distance);
 
-	}
 
     /**
      * Caculate distance from origins to destinations.
@@ -40,8 +36,8 @@ class DistanceController extends Controller
                 $responseData = json_decode($response->getBody()->getContents());
 
                 if (isset($responseData)) {
-                    return [$responseData->rows[0]->elements[0]->distance->text,
-                    $responseData->rows[0]->elements[0]->duration->text];                    
+                    return [$responseData->rows[0]->elements[0]->distance->value,
+                    $responseData->rows[0]->elements[0]->duration->value];
                 }
             }
 

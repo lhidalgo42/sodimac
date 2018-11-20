@@ -20,7 +20,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/css/ionicons.min.css',
        'node_modules/admin-lte/dist/css/AdminLTE.min.css',
        'node_modules/admin-lte/dist/css/skins/_all-skins.css',
-       'node_modules/icheck/skins/square/blue.css'
+       'node_modules/icheck/skins/square/blue.css',
+       'public/css/bootstrap-datetimepicker.css'
    ], 'public/css/all.css')
    .combine([
        'resources/assets/css/bootstrap.min.css',

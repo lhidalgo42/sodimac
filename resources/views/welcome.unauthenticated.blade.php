@@ -27,8 +27,9 @@
             @foreach($taxis as $taxi)
                 <tr>
                     <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
-                    <td>{{$taxi->departure}}</td>
-                    <td>{{$taxi->arrival}}</td>
+                    <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
+                    <td>{{Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
+                    <td>{{Carbon\Carbon::parse($taxi->arrival)->diffForHumans()}}</td>
                     <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
                     <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
                     <td>{{count($taxi->users)}} / {{$taxi->capacity}}</td>

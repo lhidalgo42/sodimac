@@ -11,38 +11,77 @@
             <form action="/taxi/create" method="post">
                 @csrf
                 <div class="form-group">
+                    <label for="origen">Cuantas Pasajeros</label>
+                    <select class="form-control" id="pasajeros" name="pasajeros">
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4 [Taxi Completo]</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="origen">Seleccione Origen</label>
                     <select class="form-control" id="origen" name="origen">
-                        <option value="">Seleccine Origen</option>
-                        @foreach($locations as $location)
-                            <option value="{{$location->id}}">{{$location->name}} [{{$location->address}}]</option>
-                        @endforeach
+                        <option value="">Seleccione Origen</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="destino">Seleccione Destino</label>
                     <select class="form-control" id="destino" name="destino">
-                        <option value="">Seleccine Destino</option>
-                        @foreach($locations as $location)
-                            <option value="{{$location->id}}">{{$location->name}} [{{$location->address}}]</option>
-                        @endforeach
+                        <option value="">Seleccione Destino</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="salida">Seleccione Fecha de Salida</label>
-                    <input id="salida" name="salida" class="form-control" value="{{\Carbon\Carbon::now()->format('Y-m-d H:i')}}" />
+                    <div class="col-xs-12" style="background-color: white">
+                        <div id="date"></div>
+                        <input type="hidden" name="date" id="realdate" value="{{date('Y-m-d H:i:s')}}">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                <div class="form-group" style="padding-top: 50px">
+                    <button type="submit" class="btn btn-success btn-block">Reservar</button>
                 </div>
             </form>
         </div>
     </div>
+@endsection
+@section('js')
+    <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/js/moment-with-locales.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datetimepicker.js"></script>
+
     <script>
-        $('#salida').datetimepicker({
-            uiLibrary: 'bootstrap4',
-            locale:"es-es",
-            format:"yyyy-mm-dd HH:MM:SS"
+        $(function () {
+            $('#date').datetimepicker({
+                inline: true,
+                sideBySide: true,
+                locale: 'es',
+                format: "yyyy-mm-dd H:i:s",
+                minDate: new Date()
+            });
+            $('#date').on('dp.change', function(e){ $("#realdate").val(e.date.format("YYYY-MM-DD HH:mm:ss")); });
+            $.ajax({
+                url:"/api/locations",
+                type:"get",
+                success:function (data) {
+                    $.each(data, function(i, item) {
+                        $('#origen').append('<option value="'+item.id+'">'+item.name+' ['+item.address+']</option>');
+                    });
+                }
+            });
+            $('#origen').change(function () {
+                $("#destino").html("");
+                $.ajax({
+                    url:"/api/locations/"+$(this).val(),
+                    type:"get",
+                    success:function (data) {
+                        $('#destino').append('<option value="">Seleccione Destino</option>');
+                        $.each(data, function(i, item) {
+                            $('#destino').append('<option value="'+item.id+'">'+item.name+' ['+item.address+']</option>');
+                        });
+                    }
+                })
+            })
         });
     </script>
 @endsection

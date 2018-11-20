@@ -7,6 +7,7 @@ use App\Models\Taxi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DistanceController;
 
 class TaxiController extends Controller
 {
@@ -18,15 +19,19 @@ class TaxiController extends Controller
 
     public function store(Request $request)
     {
+
+        $travel = DistanceController::calculate(Location::find($request->input('origen'))->address,Location::find($request->input('destino'))->address);
         $user = Auth::user()->id;
         $taxi = new Taxi();
-        $taxi->departure = $request->input('salida');
-        $taxi->arrival = Carbon::createFromFormat('Y-m-d H:i', $request->input('salida'))->addMinutes(40)->toDateTimeString();
+        $taxi->departure = $request->input('date');
+        $taxi->arrival = Carbon::parse( $request->input('date'))->addSeconds($travel[1])->toDateTimeString();
         $taxi->origin_id = $request->input('origen');
         $taxi->destination_id = $request->input('destino');
+        $taxi->distance = $travel[0];
         $taxi->user_id = $user;
         $taxi->save();
-        $taxi->users()->attach($user);
+        for($i=0;$i<$request->input('pasajeros');$i++)
+            $taxi->users()->attach($user);
         return redirect('/');
     }
 
@@ -45,7 +50,7 @@ class TaxiController extends Controller
         return 1;
     }
     public function show($location = 1){
-        $taxis = Taxi::where('departure','>',Carbon::now()->subMinutes(30)->toDateTimeString())->where('departure','<',Carbon::now()->addHours(15)->toDateTimeString())->orderBy('departure','ASC')->get();
+        $taxis = Taxi::where('departure','>',Carbon::now()->subMinutes(0)->toDateTimeString())->where('departure','<',Carbon::now()->addHours(24)->toDateTimeString())->orderBy('departure','ASC')->get();
         return view('welcome')->with(compact('locations','taxis'));
     }
 }
