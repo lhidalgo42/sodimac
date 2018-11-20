@@ -1,49 +1,64 @@
 @extends('layouts.app')
 @section('content')
+    <div class="container-fluid spark-screen" >
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2" style="background-color: white">
 
-    <div class="container">
-        <table class="table table-hover table-bordered" id="taxis">
-            <thead>
-            <tr>
-                <th>Solicitado por</th>
-                <th>Salida</th>
-                <th>Tiempo de Viaje</th>
-                <th>Origen</th>
-                <th>Destino</th>
-                <th>Cupos</th>
-                @auth
-                    <th>Solicitar</th>
-                @endauth
+                <!-- Default box -->
+                <div class="box">
+                    <div class="box-body">
+                        <table class="table table-condensed table-striped" id="taxis">
+                            <thead>
+                            <tr>
+                                <th>Solicitado por</th>
+                                <th>Salida</th>
+                                <th>Tiempo de Viaje</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Cupos</th>
+                                @auth
+                                    <th>Solicitar</th>
+                                @endauth
 
-            </tr>
-            </thead>
-            <?php \Carbon\Carbon::setLocale('es'); ?>
-            <tbody>
-            @foreach($taxis as $taxi)
-                <?php
-                $pasajeros = 0;
-                foreach ($taxi->passengers as $passenger)
-                    $pasajeros +=$passenger->pivot->passengers;
-                ?>
-                <tr>
-                    <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
-                    <td>{{Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
-                    <td>{{$taxi->travel_time}}</td>
-                    <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
-                    <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
-                    <td>{{$pasajeros}} / {{$taxi->capacity}}</td>
-                </tr>
-            @endforeach
-            </tbody>
+                            </tr>
+                            </thead>
+                            <?php \Carbon\Carbon::setLocale('es'); ?>
+                            <tbody>
+                            @foreach($taxis as $taxi)
+                                <?php
+                                $pasajeros = 0;
+                                foreach ($taxi->passengers as $passenger)
+                                    $pasajeros += $passenger->pivot->passengers;
+                                ?>
+                                <tr>
+                                    <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
+                                    <td>{{Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
+                                    <td>{{$taxi->travel_time}}</td>
+                                    <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
+                                    <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
+                                    <td>{{$pasajeros}} / {{$taxi->capacity}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
 
-        </table>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 @endsection
 @section('css')
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <style>
         #taxis > tr > td {
             text-align: center;
+        }
+
+        body {
+            background-color: #ecf0f5;
+
         }
     </style>
 @endsection
@@ -75,7 +90,7 @@
                     });
                     setTimeout(function () {
                         window.location.href = "/";
-                    },4000);
+                    }, 4000);
                 }
             })
         })
@@ -105,7 +120,7 @@
                     });
                     setTimeout(function () {
                         window.location.href = "/";
-                    },4000);
+                    }, 4000);
                 }
             })
         })
