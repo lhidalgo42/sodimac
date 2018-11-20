@@ -9,7 +9,7 @@ class Taxi extends Model
     public function users(){
         return $this->BelongsToMany(User::class,'taxi_user');
     }
-    public function cupo(){
-
+    public function passengers(){
+        return $this->belongsToMany(User::class, 'taxi_user', 'taxi_id', 'user_id')->withPivot('passengers');
     }
 }
