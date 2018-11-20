@@ -7,6 +7,7 @@ use App\Models\Taxi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class TaxiController extends Controller
 {
@@ -18,6 +19,8 @@ class TaxiController extends Controller
 
     public function store(Request $request)
     {
+        if($request->input('origen') == "" or $request->input('destino') == "")
+            return back()->with('error', 'Debe ingresar un Origen y un Destino');
 
         $travel = DistanceController::calculate(Location::find($request->input('origen'))->address, Location::find($request->input('destino'))->address);
         $user = Auth::user()->id;
@@ -29,7 +32,7 @@ class TaxiController extends Controller
         $taxi->distance = $travel[0];
         $taxi->user_id = $user;
         $taxi->save();
-        $taxi->users()->attach($user, ['pasengers' => $request->input('pasajeros')]);
+        $taxi->users()->attach($user, ['passengers' => $request->input('pasajeros')]);
         return redirect('/');
     }
 
@@ -37,7 +40,7 @@ class TaxiController extends Controller
     {
         $user = Auth::user()->id;
         $taxi = Taxi::find($id);
-        $taxi->users()->attach($user,['pasengers' => 1]);
+        $taxi->users()->attach($user,['passengers' => 1]);
         return 1;
     }
 

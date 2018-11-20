@@ -49,6 +49,7 @@
     <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/js/moment-with-locales.js"></script>
     <script type="text/javascript" src="/js/bootstrap-datetimepicker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
 
     <script>
         $(function () {
@@ -83,5 +84,12 @@
                 })
             })
         });
+        @if (Session::has('error'))
+        swal({
+            title: '{{Session::get('error')}}',
+            text: "Existe un problema",
+            type: 'error'
+        });
+        @endif
     </script>
 @endsection

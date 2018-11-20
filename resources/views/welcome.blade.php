@@ -20,13 +20,18 @@
             <?php \Carbon\Carbon::setLocale('es'); ?>
             <tbody>
             @foreach($taxis as $taxi)
+                <?php
+                $pasajeros = 0;
+                foreach ($taxi->passengers as $passenger)
+                    $pasajeros +=$passenger->pivot->passengers;
+                ?>
                 <tr>
                     <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
                     <td>{{Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
                     <td>{{$taxi->travel_time}}</td>
                     <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
                     <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
-                    <td>{{count($taxi->users)}} / {{$taxi->capacity}}</td>
+                    <td>{{$pasajeros}} / {{$taxi->capacity}}</td>
                 </tr>
             @endforeach
             </tbody>
