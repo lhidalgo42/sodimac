@@ -97,21 +97,36 @@
                 confirmButtonText: 'Si, Estoy Seguro'
             }).then((result) => {
                 if (result.value) {
-                    swal(
-                        'Confirmado',
-                        'Taxi Asignado Correctamente',
-                        'success'
-                    );
                     $.ajax({
                         url: "/taxi/assing/" + taxi,
                         method: "POST",
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success:function (res) {
+                            if (res){
+                                swal(
+                                    'Confirmado',
+                                    'Taxi Asignado Correctamente',
+                                    'success'
+                                );
+                                setTimeout(function () {
+                                    window.location.href = "/";
+                                }, 2000);
+                            }
+                            else {
+                                swal(
+                                    'Taxi lleno',
+                                    'Alguien tomo el cupo, Intenta nuevamente',
+                                    'warning'
+                                );
+                                setTimeout(function () {
+                                    window.location.href = "/";
+                                }, 2000);
+                            }
                         }
                     });
-                    setTimeout(function () {
-                        window.location.href = "/";
-                    }, 0);
+
                 }
             })
         })

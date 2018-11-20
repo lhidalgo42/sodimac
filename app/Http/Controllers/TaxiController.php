@@ -40,8 +40,15 @@ class TaxiController extends Controller
     {
         $user = Auth::user()->id;
         $taxi = Taxi::find($id);
-        $taxi->users()->attach($user,['passengers' => 1]);
-        return 1;
+        $pasajeros = 0;
+        foreach ($taxi->passengers as $passenger)
+            $pasajeros += $passenger->pivot->passengers;
+        if($pasajeros < 4) {
+            $taxi->users()->attach($user, ['passengers' => 1]);
+            return 1;
+        }
+        return 0;
+
     }
 
     public function deassing($id)
