@@ -24,7 +24,7 @@ class TaxiController extends Controller
         $user = Auth::user()->id;
         $taxi = new Taxi();
         $taxi->departure = $request->input('date');
-        $taxi->arrival = Carbon::parse( $request->input('date'))->addSeconds($travel[1])->toDateTimeString();
+        $taxi->travel_time =$travel[1];
         $taxi->origin_id = $request->input('origen');
         $taxi->destination_id = $request->input('destino');
         $taxi->distance = $travel[0];
@@ -50,7 +50,11 @@ class TaxiController extends Controller
         return 1;
     }
     public function show($location = 1){
-        $taxis = Taxi::where('departure','>',Carbon::now()->subMinutes(0)->toDateTimeString())->where('departure','<',Carbon::now()->addHours(24)->toDateTimeString())->orderBy('departure','ASC')->get();
+        $taxis = Taxi::where('departure','>',Carbon::now()->addMinutes(10)->toDateTimeString())->where('departure','<',Carbon::now()->addHours(24)->toDateTimeString())->orderBy('departure','ASC')->get();
         return view('welcome')->with(compact('locations','taxis'));
+    }
+    public function history(){
+        $taxis = Auth::user()->taxis;
+        return view('taxi.history')->with(compact('taxis'));
     }
 }

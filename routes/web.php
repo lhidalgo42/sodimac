@@ -20,4 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/taxi/create','TaxiController@store');
     Route::post('/taxi/assing/{id}','TaxiController@assing');
     Route::post('/taxi/deassing/{id}','TaxiController@deassing');
+
+    Route::get('/taxi/history','TaxiController@history');
+
 });

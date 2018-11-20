@@ -12,7 +12,7 @@
             <tr>
                 <th>Solicitado por</th>
                 <th>Salida</th>
-                <th>LLegada Aproximada</th>
+                <th>Tiempo de Viaje</th>
                 <th>Origen</th>
                 <th>Destino</th>
                 <th>Cupos</th>
@@ -27,9 +27,8 @@
             @foreach($taxis as $taxi)
                 <tr>
                     <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
-                    <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
                     <td>{{Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
-                    <td>{{Carbon\Carbon::parse($taxi->arrival)->diffForHumans()}}</td>
+                    <td>{{$taxi->travel_time}}</td>
                     <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
                     <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
                     <td>{{count($taxi->users)}} / {{$taxi->capacity}}</td>
