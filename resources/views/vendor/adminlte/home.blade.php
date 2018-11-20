@@ -105,7 +105,7 @@
                         },
                         success:function (res) {
                             console.log(res);
-                            if (res === 1){
+                            if (res === "1"){
                                 swal(
                                     'Confirmado',
                                     'Taxi Asignado Correctamente',
