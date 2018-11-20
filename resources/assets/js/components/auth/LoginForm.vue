@@ -26,14 +26,14 @@
    </transition>
   </div>
   <div class="row">
-   <div class="col-xs-8">
+   <div class="col-xs-7">
     <div class="checkbox icheck">
      <label>
       <input type="checkbox" name="remember" v-model="form.remember"> {{ trans('adminlte_lang_message.remember') }}
      </label>
     </div>
    </div>
-   <div class="col-xs-4">
+   <div class="col-xs-5">
     <button type="submit" class="btn btn-primary btn-block btn-flat" v-text="trans('adminlte_lang_message.buttonsign')" :disabled="form.errors.any()"><i v-if="form.submitting" class="fa fa-refresh fa-spin"></i></button>
    </div>
   </div>
