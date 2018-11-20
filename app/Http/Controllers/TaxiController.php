@@ -22,7 +22,7 @@ class TaxiController extends Controller
         if($request->input('origen') == "" or $request->input('destino') == "")
             return back()->with('error', 'Debe ingresar un Origen y un Destino');
 
-        $travel = DistanceController::calculate(Location::find($request->input('origen'))->address, Location::find($request->input('destino'))->address);
+        $travel = DistanceController::calculate(    Location::find($request->input('origen'))->address, Location::find($request->input('destino'))->address);
         $user = Auth::user()->id;
         $taxi = new Taxi();
         $taxi->departure = $request->input('date');
