@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Exception;
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 
 class DistanceController extends Controller
 {
@@ -16,7 +15,7 @@ class DistanceController extends Controller
      * @param $origins
      * @param $destinations
      *
-     * @return int
+     * @return array
      */
     public static function calculate($origins, $destinations)
     {
@@ -25,10 +24,10 @@ class DistanceController extends Controller
         try {
             $response = $client->get(config('distance.api_url'), [
                 'query' => [
-                    'units'        => 'metric',
-                    'origins'      => $origins,
+                    'units' => 'metric',
+                    'origins' => $origins,
                     'destinations' => $destinations,
-                    'key'          => config('distance.api_key'),
+                    'key' => config('distance.api_key'),
                 ],
             ]);
             $statusCode = $response->getStatusCode();
@@ -36,14 +35,16 @@ class DistanceController extends Controller
                 $responseData = json_decode($response->getBody()->getContents());
 
                 if (isset($responseData)) {
-                    return [$responseData->rows[0]->elements[0]->distance->value,
-                    $responseData->rows[0]->elements[0]->duration->value];
+                    return [
+                        $responseData->rows[0]->elements[0]->distance->value,
+                        $responseData->rows[0]->elements[0]->duration->text
+                    ];
                 }
             }
 
-            return -1;
+            return [-1];
         } catch (Exception $e) {
-            return -1;
+            return [-1];
         }
     }
 }
