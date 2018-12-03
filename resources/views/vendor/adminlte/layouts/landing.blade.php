@@ -5,12 +5,11 @@
         <table class="table table-hover table-bordered" id="taxis">
             <thead>
             <tr>
-                <th>Solicitado por</th>
+                <th>Publicado por</th>
                 <th>Salida</th>
-                <th>LLegada Aproximada</th>
                 <th>Origen</th>
                 <th>Destino</th>
-                <th>Cupos</th>
+                <th>Cupos utiliados</th>
                 @auth
                     <th>Solicitar</th>
                 @endauth
@@ -23,17 +22,16 @@
                 <tr>
                     <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
                     <td>{{$taxi->departure}}</td>
-                    <td>{{$taxi->arrival}}</td>
                     <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
                     <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
                     <td>{{count($taxi->users)}} / {{$taxi->capacity}}</td>
                     <td>
                         @if($taxi->capacity > count($taxi->users) && !$taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
-                            <a href="#" class="btn btn-primary subirse" taxi="{{$taxi->id}}}}">Subirse a este Taxi</a>
+                            <a href="#" class="btn btn-primary subirse" taxi="{{$taxi->id}}}}">Sumarse al viaje</a>
                         @elseif($taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
-                            <a href="#" class="btn btn-danger bajarse" taxi="{{$taxi->id}}">Bajarse de este Taxi</a>
+                            <a href="#" class="btn btn-danger bajarse" taxi="{{$taxi->id}}">Abandonar viaje</a>
                         @elseif($taxi->capacity <= count($taxi->users) && !$taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
-                            <a href="#" class="btn btn-warning">Taxi sin Cupo</a>
+                            <a href="#" class="btn btn-warning">Viaje sin Cupo</a>
                         @endif
                     </td>
                 </tr>
@@ -43,7 +41,7 @@
                 <tfooter>
                     <tr>
                         <td colspan="7">
-                            <a href="/taxi/create" class="btn btn-block btn-success">Crear Nuevo Taxi</a>
+                            <a href="/taxi/create" class="btn btn-block btn-success">Nuevo Viaje</a>
                         </td>
                     </tr>
                 </tfooter>

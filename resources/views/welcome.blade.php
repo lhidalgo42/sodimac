@@ -10,12 +10,11 @@
                         <table class="table table-condensed table-striped" id="taxis">
                             <thead>
                             <tr>
-                                <th>Solicitado por</th>
+                                <th>Publicado por</th>
                                 <th>Salida</th>
-                                <th>Tiempo de Viaje</th>
                                 <th>Origen</th>
                                 <th>Destino</th>
-                                <th>Cupos</th>
+                                <th>Cupos Utilizados</th>
                                 @auth
                                     <th>Solicitar</th>
                                 @endauth
@@ -33,7 +32,6 @@
                                 <tr>
                                     <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
                                     <td>{{Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
-                                    <td>{{$taxi->travel_time}}</td>
                                     <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
                                     <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
                                     <td>{{$pasajeros}} / {{$taxi->capacity}}</td>

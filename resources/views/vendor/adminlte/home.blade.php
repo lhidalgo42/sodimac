@@ -16,12 +16,11 @@
                         <table class="table table-hover table-bordered" id="taxis">
                             <thead>
                             <tr>
-                                <th>Solicitado por</th>
+                                <th>Publicado por</th>
                                 <th>Salida</th>
-                                <th>Tiempo de Viaje</th>
                                 <th>Origen</th>
                                 <th>Destino</th>
-                                <th>Cupos</th>
+                                <th>Cupos utilizados</th>
                                 @auth
                                     <th>Solicitar</th>
                                 @endauth
@@ -38,19 +37,16 @@
                                 <tr>
                                     <td>{{\App\Models\User::find($taxi->user_id)->name}}</td>
                                     <td>{{Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
-                                    <td>{{$taxi->travel_time}}</td>
                                     <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
                                     <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
                                     <td>{{$pasajeros}} / {{$taxi->capacity}}</td>
                                     <td>
                                         @if($taxi->capacity > $pasajeros && !$taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
-                                            <a href="#" class="btn btn-primary subirse" taxi="{{$taxi->id}}}}">Subirse a
-                                                este Taxi</a>
+                                            <a href="#" class="btn btn-primary subirse" taxi="{{$taxi->id}}}}">Sumarse al Viaje</a>
                                         @elseif($taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
-                                            <a href="#" class="btn btn-danger bajarse" taxi="{{$taxi->id}}">Bajarse de
-                                                este Taxi</a>
+                                            <a href="#" class="btn btn-danger bajarse" taxi="{{$taxi->id}}">Abandonar Viaje</a>
                                         @elseif($taxi->capacity <= $pasajeros && !$taxi->users->contains(\Illuminate\Support\Facades\Auth::user()->id))
-                                            <a href="#" class="btn btn-warning">Taxi sin Cupo</a>
+                                            <a href="#" class="btn btn-warning">Viaje sin Cupo</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -59,7 +55,7 @@
                             <tfooter>
                                 <tr>
                                     <td colspan="7">
-                                        <a href="/taxi/create" class="btn btn-success btn-block btn-lg">Crear Taxi</a>
+                                        <a href="/taxi/create" class="btn btn-success btn-block btn-lg">Nuevo Viaje</a>
 
                                     </td>
                                 </tr>

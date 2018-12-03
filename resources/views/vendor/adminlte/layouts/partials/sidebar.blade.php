@@ -37,17 +37,11 @@
             <li class="treeview">
                 <a href="#"><i class='fa fa-car'></i> <span>Taxis</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="/taxi/create">Crear Taxi</a></li>
-                    <li><a href="/taxi/history">Historial de Taxis</a></li>
+                    <li><a href="/taxi/create">Publicar Viaje</a></li>
+                    <li><a href="/taxi/history">Mis Viajes</a></li>
                 </ul>
             </li>
-            <li class="treeview">
-                <a href="#"><i class='fa fa-ticket'></i> <span>Tickets</span> <i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a href="/ticket/solicitar">Solicitar Tickets</a></li>
-                    <li><a href="/taxi/history">Historial de Taxis</a></li>
-                </ul>
-            </li>
+            
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

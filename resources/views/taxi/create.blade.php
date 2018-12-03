@@ -11,7 +11,7 @@
             <form action="/taxi/create" method="post">
                 @csrf
                 <div class="form-group">
-                    <label for="origen">Cuantas Pasajeros</label>
+                    <label for="origen">N° de Pasajeros</label>
                     <select class="form-control" id="pasajeros" name="pasajeros">
                         <option value="1" selected>1</option>
                         <option value="2">2</option>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="form-group" style="padding-top: 50px">
-                    <button type="submit" class="btn btn-success btn-block">Reservar</button>
+                    <button type="submit" class="btn btn-success btn-block">Publicar Viaje</button>
                 </div>
             </form>
         </div>
@@ -59,7 +59,9 @@
                 locale: 'es',
                 format: "yyyy-mm-dd H:i:s",
                 minDate: new Date()
+
             });
+            $('#date').data("DateTimePicker").maxDate(moment().endOf('week'));
             $('#date').on('dp.change', function(e){ $("#realdate").val(e.date.format("YYYY-MM-DD HH:mm:ss")); });
             $.ajax({
                 url:"/api/locations",
