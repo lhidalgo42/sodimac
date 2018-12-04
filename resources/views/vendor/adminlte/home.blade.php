@@ -70,13 +70,6 @@
         </div>
     </div>
 @endsection
-@section('css')
-    <style>
-        #taxis > tr > td {
-            text-align: center;
-        }
-    </style>
-@endsection
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"
             type="text/javascript"></script>
@@ -158,4 +151,14 @@
             })
         })
     </script>
+@endsection
+@section('css')
+    <style>
+        td, th {
+            height: 50px;
+            width: 50px;
+            text-align: center  !important;
+            vertical-align: middle;
+        }
+    </style>
 @endsection

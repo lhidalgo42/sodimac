@@ -50,10 +50,6 @@
 @section('css')
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <style>
-        #taxis > tr > td {
-            text-align: center;
-        }
-
         body {
             background-color: #ecf0f5;
 

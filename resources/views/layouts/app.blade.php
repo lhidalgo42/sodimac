@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" >
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
 
     <!-- CSRF Token -->
@@ -33,8 +33,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <style>
-        table > tr> th, table>tr>td{
-            text-align: center;
+        td, th {
+            height: 50px;
+            width: 50px;
+           text-align: center  !important;
+            vertical-align: middle;
         }
     </style>
     @yield('css','')
@@ -43,7 +46,7 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}"><img src="/img/logoweb.png" width="100%" ></a>
+            <a class="navbar-brand" href="{{ url('/') }}"><img src="/img/logoweb.png" width="100%"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="{{ __('Toggle navigation') }}">
