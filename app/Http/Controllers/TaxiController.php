@@ -31,6 +31,7 @@ class TaxiController extends Controller
         $taxi->destination_id = $request->input('destino');
         $taxi->distance = $travel[0];
         $taxi->user_id = $user;
+        $taxi->capacity = $request->input('tipo');
         $taxi->save();
         $taxi->users()->attach($user, ['passengers' => $request->input('pasajeros')]);
         return redirect('/');
