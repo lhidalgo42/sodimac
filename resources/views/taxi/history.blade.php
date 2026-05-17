@@ -9,32 +9,34 @@
     <div class="container">
         <div class="row">
             <!-- Default box -->
-            <div class="box">
+            <div class="box w-100">
                 <div class="box-body">
-                    <table class="table table-hover table-bordered" id="taxis">
-                        <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Origen</th>
-                            <th>Destino</th>
-                            <td>Pasajeros</td>
-                            <th>CO2</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($taxis as $taxi)
-
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered" id="taxis">
+                            <thead>
                             <tr>
-                                <td>{{\Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
-                                <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
-                                <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
-                                <td></td>
-                                <td>{{($taxi->distance*0.0001)}} Kg</td>
+                                <th>Fecha</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <td>Pasajeros</td>
+                                <th>CO2</th>
                             </tr>
-                        @endforeach
-                        </tbody>
+                            </thead>
+                            <tbody>
+                            @foreach($taxis as $taxi)
 
-                    </table>
+                                <tr>
+                                    <td>{{\ Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
+                                    <td>{{\ App\Models\Location::find($taxi->origin_id)->name}}</td>
+                                    <td>{{\ App\Models\Location::find($taxi->destination_id)->name}}</td>
+                                    <td></td>
+                                    <td>{{($taxi->distance*0.0001)}} Kg</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
