@@ -26,9 +26,9 @@
                             @foreach($taxis as $taxi)
 
                                 <tr>
-                                    <td>{{\ Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
-                                    <td>{{\ App\Models\Location::find($taxi->origin_id)->name}}</td>
-                                    <td>{{\ App\Models\Location::find($taxi->destination_id)->name}}</td>
+                                    <td>{{\Carbon\Carbon::parse($taxi->departure)->diffForHumans()}}</td>
+                                    <td>{{\App\Models\Location::find($taxi->origin_id)->name}}</td>
+                                    <td>{{\App\Models\Location::find($taxi->destination_id)->name}}</td>
                                     <td></td>
                                     <td>{{($taxi->distance*0.0001)}} Kg</td>
                                 </tr>
